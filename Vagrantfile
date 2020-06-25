@@ -6,16 +6,10 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
-
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/bionic64"
-
-  config.vm.define "client" do |client|
-    client.vm.hostname = "client"
+  config.vm.network "private_network", ip:"192.168.10.100"
+  config.hostsupdater.aliases = ["dev.local"]
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "provisioning/playbook.yml"
   end
-
 end
